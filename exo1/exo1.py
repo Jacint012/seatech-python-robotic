@@ -42,7 +42,7 @@ class Robot():
         batterie=self.__battery_level
         for i in range(level):
             if batterie<=level:
-                print("la batterie est chargé à:", batterie)
+                print("la batterie est chargé à:", batterie, "%")
                 batterie=batterie+10
                 time.sleep(1)
 
