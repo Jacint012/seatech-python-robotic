@@ -9,7 +9,7 @@
     #Mon robot doit pouvoir me donner sa vitesse de déplacement
     #Mon robot doit pouvoir arrêter son déplacement sur commande
     #Mon robot doit pouvoir me fournir un résumé de son état global
-
+import time
 class Robot():
     __name = "<unnamed>"
     __power = False
@@ -17,10 +17,40 @@ class Robot():
     __battery_level = 0
     __states = ['shutown', 'running']
     
-        
-    def AfficheCharge(self):
 
-        return self.__battery_level
+    def Allume(self):
+        
+        self.__power = True
+        
+
+    def Eteindre(self):
+        
+        self.__power = False
+        
+
+
+    def Charge(self, Niveau=None):
+	
+        if type(Niveau) == int:
+        
+            self.__battery_level = Niveau
+        
+        elif Niveau is None:
+            return "Mise de la Batterie 100%"
+
+    def Chargetest(self, level=None):
+        batterie=self.__battery_level
+        for i in range(level):
+            if batterie<=level:
+                print("la batterie est chargé à:", batterie)
+                batterie=batterie+10
+                time.sleep(1)
+
+        self.__battery_level=batterie-10
+
+
+    def Nom(self, Nom):
+        self.__name = Nom
         
 
     def Stop(self):
@@ -28,19 +58,45 @@ class Robot():
         self.__current_speed = 0
         
         
+    def Speed(self, vitesse):
+        self.__current_speed = vitesse
         
-    def Move(self, speed):
-        
-        if type(speed) == int:
-        
-            self.__current_speed = speed
-        
-        
-        
-    def Speed(self):
-        
+    
+    @property
+    def AffichSpeed(self):
+        print("Sa vitesse est de:")
         return self.__current_speed
+    
+    @property
+    def AfficheCharge(self):
+        print("Le Niveau de Charge:")
+        return self.__battery_level
+
+    @property
+    def AffichNom(self):
+        print("Le nom du robot est: ")
+        return self.__name
+
+    @property
+    def AffichEtat(self):
+        if self.__power == True:
+            print("Robot Allume")
+            return self.__power
+        else:
+            print("Robot Eteint")
+            return self.__power
+
+    def Status(self):
+        
+        print(r.AffichEtat)
+        print(r.AffichNom)
+        print(r.AfficheCharge)
+        print(r.AffichSpeed)
 
 
 r = Robot()
-r.AfficheCharge()
+r.Allume()
+r.Nom("Robito")
+r.Chargetest(100)
+r.Speed(250)
+r.Status()
