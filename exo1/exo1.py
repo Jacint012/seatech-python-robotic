@@ -26,7 +26,6 @@ class Robot():
     def Eteindre(self):
         
         self.__power = False
-        
 
 
     def Charge(self, Niveau=None):
@@ -59,6 +58,7 @@ class Robot():
         
         
     def Speed(self, vitesse):
+        
         self.__current_speed = vitesse
         
     
@@ -80,11 +80,14 @@ class Robot():
     @property
     def AffichEtat(self):
         if self.__power == True:
-            print("Robot Allume")
-            return self.__power
+
+            self.__states = 'running'
+            return self.__states
+
         else:
-            print("Robot Eteint")
-            return self.__power
+
+            self.__states = 'shutdown'
+            return self.__states
 
     def Status(self):
         
@@ -95,8 +98,9 @@ class Robot():
 
 
 r = Robot()
+entrernom=input('Entrer le nom du robot:')
 r.Allume()
-r.Nom("Robito")
-r.Chargetest(100)
+r.Nom(entrernom)
+r.Chargetest(50)
 r.Speed(250)
 r.Status()
