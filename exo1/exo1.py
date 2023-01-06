@@ -55,6 +55,7 @@ class Robot():
     def Stop(self):
         
         self.__current_speed = 0
+        print("Arret du Robot")
         
         
     def Speed(self, vitesse):
@@ -104,3 +105,4 @@ r.Nom(entrernom)
 r.Chargetest(50)
 r.Speed(250)
 r.Status()
+r.Stop()
