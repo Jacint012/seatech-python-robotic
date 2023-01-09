@@ -57,6 +57,7 @@ print(cyborg.affichNom, 'sexe', cyborg.affichsexe)
 print('Charging battery...')
 cyborg.chargetest(30)
 cyborg.status()
+#test
 # cyborg.eat('banana')
 # cyborg.eat(['coca', 'chips'])
 # #cyborg.digest()
