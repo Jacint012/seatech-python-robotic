@@ -10,7 +10,9 @@
     #Mon robot doit pouvoir arrêter son déplacement sur commande
     #Mon robot doit pouvoir me fournir un résumé de son état global
 import time
+
 class Robot():
+
     __name = "<unnamed>"
     __power = False
     __current_speed = 0
@@ -37,7 +39,7 @@ class Robot():
         elif Niveau is None:
             return "Mise de la Batterie 100%"
 
-    def Chargetest(self, level=None):
+    def chargetest(self, level=None):
         batterie=self.__battery_level
         for i in range(level):
             if batterie<=level:
@@ -48,11 +50,11 @@ class Robot():
         self.__battery_level=batterie-10
 
 
-    def Nom(self, Nom):
+    def nom(self, Nom):
         self.__name = Nom
         
 
-    def Stop(self):
+    def stop(self):
         
         self.__current_speed = 0
         print("Arret du Robot")
@@ -64,22 +66,22 @@ class Robot():
         
     
     @property
-    def AffichSpeed(self):
+    def affichSpeed(self):
         print("Sa vitesse est de:")
         return self.__current_speed
     
     @property
-    def AfficheCharge(self):
+    def afficheCharge(self):
         print("Le Niveau de Charge:")
         return self.__battery_level
 
     @property
-    def AffichNom(self):
+    def affichNom(self):
         print("Le nom du robot est: ")
         return self.__name
 
     @property
-    def AffichEtat(self):
+    def affichEtat(self):
         if self.__power == True:
 
             self.__states = 'running'
@@ -90,19 +92,22 @@ class Robot():
             self.__states = 'shutdown'
             return self.__states
 
-    def Status(self):
-        
-        print(r.AffichEtat)
-        print(r.AffichNom)
-        print(r.AfficheCharge)
-        print(r.AffichSpeed)
+    def status(self):
+        print("---STATUS---")
+        print(self.affichEtat)
+        print(self.affichNom)
+        print(self.afficheCharge)
+        print(self.affichSpeed)
+        print("--------------")
 
+print(__name__)
 
-r = Robot()
-entrernom=input('Entrer le nom du robot:')
-r.Allume()
-r.Nom(entrernom)
-r.Chargetest(50)
-r.Speed(250)
-r.Status()
-r.Stop()
+if __name__=='__main__':
+    r = Robot()
+    entrernom=input('Entrer le nom du robot:')
+    r.Allume()
+    r.nom(entrernom)
+    r.Chargetest(0)
+    r.Speed(250)
+    r.status()
+    r.stop()
