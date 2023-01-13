@@ -22,6 +22,10 @@ class Human():
     def eat (self,food):
         self.__food.append(food)
 
+    def digest(self):
+        self.__food=''
+
+
     @property
     def affichsexe (self):
         return self.__sexe
@@ -34,7 +38,7 @@ class Human():
 
 class Cyborg(Robot, Human):   
 
-    def __init__(self, name, sexe):
+    def __init__(self, name, sexe:str):
         
         #Robot.__init__(self, name)
         self.nom(name)
@@ -42,22 +46,22 @@ class Cyborg(Robot, Human):
         Human.__init__(self, sexe)
 
 
+if __name__=='__main__':
 
+    h=Human('M')
+    print('le sexe est:')
+    print(h.affichsexe)
+    h.eat('coca')
+    print('la nourriture est:')
+    print(h.affichfood)
 
-h=Human('M')
-print('le sexe est:')
-print(h.affichsexe)
-h.eat('coca')
-print('la nourriture est:')
-print(h.affichfood)
-
-cyborg = Cyborg('Deux Ex Machina', 'M')
-print(cyborg.affichNom)
-print(cyborg.affichNom, 'sexe', cyborg.affichsexe)
-print('Charging battery...')
-cyborg.chargetest(30)
-cyborg.status()
-#test
-# cyborg.eat('banana')
-# cyborg.eat(['coca', 'chips'])
-# #cyborg.digest()
+    cyborg = Cyborg('Deux Ex Machina', 'M')
+    print(cyborg.affichNom)
+    print(cyborg.affichNom, 'sexe', cyborg.affichsexe)
+    print('Charging battery...')
+    cyborg.chargetest(30)
+    cyborg.Speed(20)
+    cyborg.eat('banana')
+    cyborg.digest()
+    print(cyborg.affichfood)
+    cyborg.status()
