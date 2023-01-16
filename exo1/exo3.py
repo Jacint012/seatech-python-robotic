@@ -25,7 +25,7 @@ class UnmannedVehicle(metaclass=ABCMeta):
     @abstractmethod
     def startmission(self):
         pass
-        "Début de mission"
+        
     
     @abstractmethod
     def do_something_interesting(self):
@@ -35,7 +35,7 @@ class UnmannedVehicle(metaclass=ABCMeta):
     @abstractmethod
     def stopmission(self):
         pass
-        "Arret de la mission"
+        
         
     
 class AerialVehicle(metaclass=ABCMeta):
