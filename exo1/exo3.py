@@ -23,54 +23,119 @@ class UnmannedVehicle(metaclass=ABCMeta):
         This mission can be configured by an operator.
     """
     @abstractmethod
-    def startmission():
-        "Début de mission"
+    def startmission(self):
         pass
+        "Début de mission"
+    
+    @abstractmethod
+    def do_something_interesting(self):
+        pass
+        
 
     @abstractmethod
-    def stopmission():
+    def stopmission(self):
+        pass
         "Arret de la mission"
+        
+    
+class AerialVehicle(metaclass=ABCMeta):
+
+    """ A vehicle made for ground fields."""
+
+    @abstractmethod
+    def do_something_aerial_specific(self):
         pass
 
+class GroundVehicle(metaclass=ABCMeta):
+
+    """ A vehicle made for ground fields."""
+
+    @abstractmethod
+    def do_something_ground_specific(self):
+        pass
     
 
-class AerialVehicle(metaclass=ABCMeta):
-    """ A vehicle made for ground fields."""
-
-    pass
-
-class GroundVehicle(metaclass=ABCMeta):
-    """ A vehicle made for ground fields."""
-    pass
-
 class UnderseaVehicle(metaclass=ABCMeta):
+
     """ A vehicle made for ground fields."""
-    pass
+    
+    @abstractmethod
+    def do_something_undersea_specific(self):
+        pass
 
 class UAV(UnmannedVehicle, AerialVehicle):
     """Unmanned Aerial Vehicle"""
-    pass
+    
+    def startmission(self):
+        print("Debut de mission UAV")
+         
+
+    def stopmission(self):
+        print("Arret de mission UAV")
+        
+
+    def do_something_interesting(self):
+        print("Fonctionne")
+        
+
+    def do_something_aerial_specific(self):
+        print("Vole")
+        
 
 class UUV(UnmannedVehicle, UnderseaVehicle):
     """Unmanned Undersea Vehicle"""
-    pass
+    
+    def startmission(self):
+        print("Debut de mission UUV")
+
+
+    def stopmission(self):
+       print("Arret de mission UUV")
+        
+
+    def do_something_interesting(self):
+        print("Fonctionne")
+        
+
+    def do_something_undersea_specific(self):
+        print("Navigue")
+        
 
 class UGV(UnmannedVehicle, GroundVehicle):
     """Unmanned Ground Vehicle"""
-    pass
+    
+    def startmission(self):
+        print("Debut de mission UGV")
+        
+        
+    def stopmission(self):
+        print("Arret de mission UGV")
+        
+    
+    def do_something_interesting(self):
+        print("Fonctionne")
 
-
+    
+    def do_something_ground_specific(self):
+        print("Roule")
+        
 
 if __name__=='__main__':
 
     uav = UAV()
+    uav.startmission()
     uav.do_something_interesting()
     uav.do_something_aerial_specific()
+    uav.stopmission()
 
     ugv = UGV()
+    ugv.startmission()
     ugv.do_something_interesting()
     ugv.do_something_ground_specific()
+    ugv.stopmission()
 
     uuv = UUV()
+    uuv.startmission()
     uuv.do_something_interesting()
     uuv.do_something_undersea_specific()
+    uuv.stopmission()
