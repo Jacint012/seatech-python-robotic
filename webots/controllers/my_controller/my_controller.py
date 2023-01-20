@@ -10,9 +10,7 @@ class smashBotMotor(Motor):
         super().__init__(name)
         self.setPosition(float('inf'))
         self.setVelocity(0)
-        
-
-
+          
 
 class smashBotMotors():
 
@@ -51,11 +49,12 @@ class smashBot(Robot):
     def __init__(self, speed=None):
         super().__init__()
         self.__motors=smashBotMotors()
+       
 
-    def run(self):
-        if True:
+    def run(self, direction=None):
+        if direction=='F':
             self.__motors.goforward()
-        else:
+        elif direction=='B':
             self.__motors.goback()
             
     
@@ -76,7 +75,8 @@ timestep = int(robot.getBasicTimeStep())
 # - perform simulation steps until Webots is stopping the controller
 while robot.step(timestep) != -1:
 
-    robot.run()
+    robot.run('B')
+    robot.getDevice('imu compass')
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
