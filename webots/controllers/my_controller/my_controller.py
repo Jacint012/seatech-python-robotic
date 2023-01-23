@@ -3,13 +3,14 @@
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
 from controller import Robot, Motor, DistanceSensor
-
+from typing import Union
 class smashBotMotor(Motor):
 
     def __init__(self, name=None):
         super().__init__(name)
         self.setPosition(float('inf'))
         self.setVelocity(0)
+        print(self.getMaxVelocity())
           
 
 class smashBotMotors():
@@ -45,19 +46,39 @@ class smashBotMotors():
         self.__rear_left_wheel_motor.setVelocity(-10)
 
 
+class Distance():
+    def __init__(self):
+        self.__front_left_distance_sensor = DistanceSensor('front left distance sensor')
+        self.__front_right_distance_sensor = DistanceSensor('front right distance sensor')
+        self.__rear_left_distance_sensor = DistanceSensor('rear left distance sensor')
+        self.__rear_right_distance_sensor = DistanceSensor('rear right distance sensor')
+
+    
+    def getDistanceValue(self):
+        return [self.__front_left_distance_sensor.getValue(),
+        self.__front_right_distance_sensor.getValue(),
+        self.__rear_left_distance_sensor.getValue(),
+        self.__rear_right_distance_sensor.getValue()]
+
 class smashBot(Robot):
     def __init__(self, speed=None):
         super().__init__()
         self.__motors=smashBotMotors()
+        self.distances=Distance()
        
 
-    def run(self, direction=None):
-        if direction=='F':
+    def run(self, direction):
+        if direction=="F":
             self.__motors.goforward()
-        elif direction=='B':
+        elif direction=="B":
             self.__motors.goback()
+        elif direction=="L":
+            self.__motors.turnleft()
+        elif direction=="R":
+            self.__motors.turnright()
             
-    
+
+
 
 # create the Robot instance.
 robot = smashBot()
@@ -75,8 +96,9 @@ timestep = int(robot.getBasicTimeStep())
 # - perform simulation steps until Webots is stopping the controller
 while robot.step(timestep) != -1:
 
-    robot.run('B')
-    robot.getDevice('imu compass')
+    robot.run("F")
+    print(robot.distances.getDistanceValue())
+    
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
