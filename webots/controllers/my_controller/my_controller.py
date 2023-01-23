@@ -2,8 +2,8 @@
 
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
-from controller import Robot, Motor, DistanceSensor
-from typing import Union
+from controller import Robot, Motor, DistanceSensor, Lidar, Compass
+
 class smashBotMotor(Motor):
 
     def __init__(self, name=None):
@@ -46,7 +46,23 @@ class smashBotMotors():
         self.__rear_left_wheel_motor.setVelocity(-10)
 
 
-class Distance():
+class CompassSens():
+    def __init__(self):
+        self.__compasssenor=Compass('imu compass')
+
+    def getCompassValue(self):
+        return self.__compasssenor.getValues()
+
+
+class LidarSens():
+    def __init__(self):
+        self.__lidarsensor=Lidar('lidar')
+        self.__lidarsensor.enablePointCloud()
+
+    def getLidarValue(self):
+        return self.__lidarsensor.getRangeImage()
+
+class DistanceSens():
     def __init__(self):
         self.__front_left_distance_sensor = DistanceSensor('front left distance sensor')
         self.__front_right_distance_sensor = DistanceSensor('front right distance sensor')
@@ -64,7 +80,9 @@ class smashBot(Robot):
     def __init__(self, speed=None):
         super().__init__()
         self.__motors=smashBotMotors()
-        self.distances=Distance()
+        self.distances=DistanceSens()
+        self.lidars=LidarSens()
+        self.compass=CompassSens()
        
 
     def run(self, direction):
@@ -97,8 +115,9 @@ timestep = int(robot.getBasicTimeStep())
 while robot.step(timestep) != -1:
 
     robot.run("F")
-    print(robot.distances.getDistanceValue())
-    
+    #print(robot.distances.getDistanceValue())
+    #print(robot.lidars.getLidarValue())
+    print(robot.compass.getCompassValue())
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
