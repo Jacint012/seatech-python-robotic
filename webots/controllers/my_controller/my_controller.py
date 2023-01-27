@@ -45,6 +45,7 @@ class smashBotMotors():
         self.__front_left_wheel_motor.setVelocity(-10)
         self.__rear_left_wheel_motor.setVelocity(-10)
 
+    
 
 class GPSSens(GPS):
     def __init__(self):
@@ -77,7 +78,7 @@ class GPSSens(GPS):
         else:
             print(False)
             return False
-        #print(long)
+        
 
 class LidarSens(Lidar):
     def __init__(self):
@@ -122,8 +123,6 @@ class smashBot(Robot):
             self.__motors.turnright()
             
 
-
-
 # create the Robot instance.
 robot = smashBot()
 
@@ -155,12 +154,9 @@ while robot.step(timestep) != -1:
         robot.run("F")
     else:
         robot.run("B")
+       
     
         
-        
-    
-    
-
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
