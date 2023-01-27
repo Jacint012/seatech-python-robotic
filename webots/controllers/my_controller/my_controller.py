@@ -2,8 +2,8 @@
 
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
-from controller import Robot, Motor, DistanceSensor, Lidar, Compass
-
+from controller import Robot, Motor, DistanceSensor, Lidar, Compass, GPS
+import time
 class smashBotMotor(Motor):
 
     def __init__(self, name=None):
@@ -36,8 +36,8 @@ class smashBotMotors():
     def turnright(self):
         self.__front_right_wheel_motor.setVelocity(-10)
         self.__rear_right_wheel_motor.setVelocity(-10)
-        self.__front_left_wheel_motor.setVelocity(10)
-        self.__rear_left_wheel_motor.setVelocity(10)
+        self.__front_left_wheel_motor.setVelocity(10/2)
+        self.__rear_left_wheel_motor.setVelocity(10/2)
 
     def turnleft(self):
         self.__front_right_wheel_motor.setVelocity(10)
@@ -46,21 +46,46 @@ class smashBotMotors():
         self.__rear_left_wheel_motor.setVelocity(-10)
 
 
-class CompassSens():
+class GPSSens(GPS):
     def __init__(self):
-        self.__compasssenor=Compass('imu compass')
+        super().__init__('gps')
+       
+    def getGPSValue(self):
+        return self.getValues()
 
-    def getCompassValue(self):
-        return self.__compasssenor.getValues()
+    def checkGPS(self):
+        
+        border={
+            "left":-3.5,
+            "right":3.5,
+            "front":3.5,
+            "back":-3.5
+        }
+        limit=0.3
 
+        Coordinates=self.getValues()
+        long=[]
+        test=False
+        for key,value in border.items():
+            long.append(abs(Coordinates[0]-border[key]))
+            long.append(abs(Coordinates[1]-border[key]))
+           
+        longs = min(long)
+        if(longs<limit):
+            print(True)
+            return True
+        else:
+            print(False)
+            return False
+        #print(long)
 
-class LidarSens():
+class LidarSens(Lidar):
     def __init__(self):
-        self.__lidarsensor=Lidar('lidar')
-        self.__lidarsensor.enablePointCloud()
+        super().__init__('lidar')
+        self.enablePointCloud()
 
     def getLidarValue(self):
-        return self.__lidarsensor.getRangeImage()
+        return self.getRangeImage()
 
 class DistanceSens():
     def __init__(self):
@@ -82,7 +107,8 @@ class smashBot(Robot):
         self.__motors=smashBotMotors()
         self.distances=DistanceSens()
         self.lidars=LidarSens()
-        self.compass=CompassSens()
+        self.gps=GPSSens()
+
        
 
     def run(self, direction):
@@ -103,7 +129,7 @@ robot = smashBot()
 
 # get the time step of the current world.
 timestep = int(robot.getBasicTimeStep())
-
+  #robot.run("F")
 # You should insert a getDevice-like function in order to get the
 # instance of a device of the robot. Something like:
 #  motor = robot.getDevice('motorname')
@@ -114,19 +140,36 @@ timestep = int(robot.getBasicTimeStep())
 # - perform simulation steps until Webots is stopping the controller
 while robot.step(timestep) != -1:
 
-    robot.run("F")
+    
     #print(robot.distances.getDistanceValue())
     #print(robot.lidars.getLidarValue())
-    print(robot.compass.getCompassValue())
+    #print(robot.compass.getCompassValue())
+    gps_value=robot.gps.getGPSValue()
+    msg="Gps valeur:"
+    for each_val in gps_value:
+        msg += " {0:0.5f}".format(each_val)
+    print(msg)
+
+
+    if(robot.gps.checkGPS()==False):
+        robot.run("F")
+    else:
+        robot.run("B")
+    
+        
+        
+    
+    
+
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
     #  val = ds.getValue()
-
+    
     # Process sensor data here.
 
     # Enter here functions to send actuator commands, like:
     #  motor.setPosition(10.0)
-    pass
+    
 
 # Enter here exit cleanup code.
