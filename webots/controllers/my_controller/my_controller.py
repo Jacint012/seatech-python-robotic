@@ -2,7 +2,7 @@
 
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
-from controller import Robot, Motor, DistanceSensor, Lidar, Compass, GPS
+from controller import Robot, Motor, DistanceSensor, Lidar, GPS
 import time
 class smashBotMotor(Motor):
 
@@ -34,16 +34,16 @@ class smashBotMotors():
         self.__rear_left_wheel_motor.setVelocity(-10)
 
     def turnright(self):
-        self.__front_right_wheel_motor.setVelocity(-10)
-        self.__rear_right_wheel_motor.setVelocity(-10)
-        self.__front_left_wheel_motor.setVelocity(10/2)
-        self.__rear_left_wheel_motor.setVelocity(10/2)
+        self.__front_right_wheel_motor.setVelocity(0)
+        self.__rear_right_wheel_motor.setVelocity(0)
+        self.__front_left_wheel_motor.setVelocity(10)
+        self.__rear_left_wheel_motor.setVelocity(10)
 
     def turnleft(self):
         self.__front_right_wheel_motor.setVelocity(10)
         self.__rear_right_wheel_motor.setVelocity(10)
-        self.__front_left_wheel_motor.setVelocity(-10)
-        self.__rear_left_wheel_motor.setVelocity(-10)
+        self.__front_left_wheel_motor.setVelocity(0)
+        self.__rear_left_wheel_motor.setVelocity(0)
 
     
 
@@ -66,7 +66,7 @@ class GPSSens(GPS):
 
         Coordinates=self.getValues()
         long=[]
-        test=False
+        
         for key,value in border.items():
             long.append(abs(Coordinates[0]-border[key]))
             long.append(abs(Coordinates[1]-border[key]))
@@ -153,7 +153,8 @@ while robot.step(timestep) != -1:
     if(robot.gps.checkGPS()==False):
         robot.run("F")
     else:
-        robot.run("B")
+        robot.run("L")
+        robot.run("F")
        
     
         
