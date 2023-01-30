@@ -54,7 +54,7 @@ class GPSSens(GPS):
     def getGPSValue(self):
         return self.getValues()
 
-    def checkGPS(self):
+    def checkGPS(self, check):
         
         border={
             "left":-3.5,
@@ -74,16 +74,18 @@ class GPSSens(GPS):
         longs = min(long)
         if(longs<limit):
             print(True)
-            return True
+            check=True
+            return check
         else:
             print(False)
-            return False
+            check=False
+            return check
         
 
 class LidarSens(Lidar):
     def __init__(self):
         super().__init__('lidar')
-        self.enablePointCloud()
+        #self.enablePointCloud()
 
     def getLidarValue(self):
         return self.getRangeImage()
@@ -148,15 +150,19 @@ while robot.step(timestep) != -1:
     for each_val in gps_value:
         msg += " {0:0.5f}".format(each_val)
     print(msg)
-
-
-    if(robot.gps.checkGPS()==False):
-        robot.run("F")
-    else:
-        robot.run("L")
-        robot.run("F")
-       
     
+    robot.run("F")
+
+    if(robot.gps.checkGPS(True)==True):
+        robot.run("R")
+        robot.gps.checkGPS(False)
+    
+        
+            
+        
+ 
+
+
         
 
     # Read the sensors:
