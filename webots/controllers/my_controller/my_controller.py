@@ -73,11 +73,11 @@ class GPSSens(GPS):
            
         longs = min(long)
         if(longs<limit):
-            print(True)
+            #print(True)
             
             return True
         else:
-            print(False)
+            #print(False)
             
             return False
         
