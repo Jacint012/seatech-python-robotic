@@ -10,7 +10,7 @@ class smashBotMotor(Motor):
         super().__init__(name)
         self.setPosition(float('inf'))
         self.setVelocity(0)
-        print(self.getMaxVelocity())
+        #print(self.getMaxVelocity())
           
 
 class smashBotMotors():
