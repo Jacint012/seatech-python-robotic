@@ -54,7 +54,7 @@ class GPSSens(GPS):
     def getGPSValue(self):
         return self.getValues()
 
-    def checkGPS(self, check):
+    def checkGPS(self):
         
         border={
             "left":-3.5,
@@ -74,12 +74,12 @@ class GPSSens(GPS):
         longs = min(long)
         if(longs<limit):
             print(True)
-            check=True
-            return check
+            
+            return True
         else:
             print(False)
-            check=False
-            return check
+            
+            return False
         
 
 class LidarSens(Lidar):
@@ -149,13 +149,14 @@ while robot.step(timestep) != -1:
     msg="Gps valeur:"
     for each_val in gps_value:
         msg += " {0:0.5f}".format(each_val)
-    print(msg)
+    #print(msg)
     
     robot.run("F")
 
-    if(robot.gps.checkGPS(True)==True):
+    if(robot.gps.checkGPS()==True):
         robot.run("R")
-        robot.gps.checkGPS(False)
+    else:
+        robot.run("F")
     
         
             
