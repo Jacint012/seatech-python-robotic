@@ -3,7 +3,7 @@
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
 from controller import Robot, Motor, DistanceSensor, Lidar, GPS
-import time
+import time, random
 class smashBotMotor(Motor):
 
     def __init__(self, name=None):
@@ -152,19 +152,13 @@ while robot.step(timestep) != -1:
     #print(msg)
     
     robot.run("F")
-
     if(robot.gps.checkGPS()==True):
-        robot.run("R")
+    
+        robot.run("R") 
+
     else:
         robot.run("F")
     
-        
-            
-        
- 
-
-
-        
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
